@@ -25,7 +25,6 @@ int main (int argc, char *argv[]) {
         exit(1);
     } else {
         port = atoi(argv[1]);
-        printf("Escuchando en puerto %d\n", port);
     }
     sk = socket(AF_INET, SOCK_DGRAM, 0);
     dirMia.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -34,6 +33,8 @@ int main (int argc, char *argv[]) {
     if (result < 0) {
         printf("Error al crear el socket en el puerto %d", port);
         exit(1);
+    }else{
+        printf("Escuchando en puerto %d\n", port);
     }
 
     while (result >= 0) {
