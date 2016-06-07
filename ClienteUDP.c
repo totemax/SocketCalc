@@ -21,11 +21,11 @@ int main (int argc, char *argv[]) {
         printf("Error al invocar el programa. Formato llamada client [port] [operacion] [operando1] [operando2]. Ej: cliente 7777 + 5 2.\n");
         exit(1);
     } else {
-        port = atoi(argv[1]);
+        port = atoi(argv[4]);
         printf("Se va a enviar en puerto %d\n", port);
-        mensajeEnv[0] = *argv[2];
-        mensajeEnv[1] = *argv[3];
-        mensajeEnv[2] = *argv[4];
+        mensajeEnv[0] = *argv[1];
+        mensajeEnv[1] = *argv[2];
+        mensajeEnv[2] = *argv[3];
     }
 
     sk=socket (AF_INET, SOCK_DGRAM,0);
@@ -37,9 +37,9 @@ int main (int argc, char *argv[]) {
 
     int tam= sizeof(dirServ);
 
-    rec= recvfrom(sk,mensajeRec,sizeof(mensajeRec), 0, (struct sockaddr*)&dirServ, &tam);
+    rec= recvfrom(sk,mensajeRec,sizeof(mensajeRec), 0, (struct sockaddr*)&dirServ, (unsigned*) &tam);
     mensajeRec[rec] = '\0';
-    printf("resultado: %s", mensajeRec);
+    printf("resultado: %s\n", mensajeRec);
 
     exit(0);
 }

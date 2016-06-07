@@ -27,11 +27,12 @@ int main (int argc, char *argv[]) {
         port = atoi(argv[1]);
     }
     sk = socket(AF_INET, SOCK_DGRAM, 0);
+    dirMia.sin_family = AF_INET;
     dirMia.sin_addr.s_addr = inet_addr("127.0.0.1");
     dirMia.sin_port = htons(port);
     result = bind(sk, (struct sockaddr*)&dirMia, sizeof(dirMia));
     if (result < 0) {
-        printf("Error al crear el socket en el puerto %d", port);
+        printf("Error al crear el socket en el puerto %d\n", port);
         exit(1);
     }else{
         printf("Escuchando en puerto %d\n", port);
@@ -41,6 +42,7 @@ int main (int argc, char *argv[]) {
         bzero(&dirCli,sizeof(dirCli));
         int tam = sizeof(dirCli);
         recvfrom(sk, mensajeRec, sizeof(mensajeRec), 0, (struct sockaddr*)&dirCli, (unsigned*)&tam);
+        printf("Mensaje %s\n", mensajeRec);
         operando1 = mensajeRec[1] - '0';
         operando2 = mensajeRec[2] - '0';
         switch(mensajeRec[0]) {
@@ -57,6 +59,7 @@ int main (int argc, char *argv[]) {
                 resultado_operacion = operando1*operando2;
                 break;
         }
+        printf("Resultado: %d\n", resultado_operacion);
         mensajeEnv[0] = resultado_operacion/10 + '0';
         mensajeEnv[1] = resultado_operacion%10 + '0';
         result = sendto(sk,mensajeEnv,strlen(mensajeEnv),0,(struct sockaddr*)&dirCli,sizeof(dirCli));
