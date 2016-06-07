@@ -19,6 +19,7 @@ int sk, rec;
 int main (int argc, char *argv[]) {
     if (argc < 5) {
         printf("Error al invocar el programa. Formato llamada client [port] [operacion] [operando1] [operando2]. Ej: cliente 7777 + 5 2.\n");
+        printf("Nota: El parámetro multiplicación '*' se deberá enviar con el caracter backslash delante '\\'\n");
         exit(1);
     } else {
         port = atoi(argv[4]);
