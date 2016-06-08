@@ -42,7 +42,6 @@ int main (int argc, char *argv[]) {
         bzero(&dirCli,sizeof(dirCli));
         int tam = sizeof(dirCli);
         recvfrom(sk, mensajeRec, sizeof(mensajeRec), 0, (struct sockaddr*)&dirCli, (unsigned*)&tam);
-        printf("Mensaje %s\n", mensajeRec);
         operando1 = mensajeRec[1] - '0';
         operando2 = mensajeRec[2] - '0';
         switch(mensajeRec[0]) {
@@ -59,7 +58,6 @@ int main (int argc, char *argv[]) {
                 resultado_operacion = operando1*operando2;
                 break;
         }
-        printf("Resultado: %d\n", resultado_operacion);
         mensajeEnv[0] = resultado_operacion/10 + '0';
         mensajeEnv[1] = resultado_operacion%10 + '0';
         result = sendto(sk,mensajeEnv,strlen(mensajeEnv),0,(struct sockaddr*)&dirCli,sizeof(dirCli));
